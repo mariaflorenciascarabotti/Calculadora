@@ -13,8 +13,13 @@ body{
 #resultado{
     background-color: rgb(206, 206, 206);
     height: 7.5rem;
-    border: 2rem solid #0D1A28;
+    border: 1.5rem solid #0D1A28;
     border-radius: 2rem 2rem 0 0;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    color: black;
 }
 .grid-contenedor{
     background: linear-gradient(180deg, #3490ce, #19314d);
@@ -33,11 +38,16 @@ body{
     color: #fff;
     border: none;
     border-radius: .7rem;
+    box-shadow: 3px 3px 0 -1px #00000045;
 }
 .btnn:hover{
-    background-color: #1a3c53;
+    /* background-color: #1a3c53; */
     outline: 1px solid white;
 }
+.btnn:active{
+    box-shadow: inset 2px 2px 2px 0 #225d8479;
+}
+
 .num{
     background-color: #7e94ac;
 }
