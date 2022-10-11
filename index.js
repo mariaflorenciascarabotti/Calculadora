@@ -1,15 +1,59 @@
-const resultadoValorAnterior = document.getElementById("valor-anterior");
-const resultadoValorActual = document.getElementById("valor-actual");
-const botonesNumeros = document.querySelectorAll(".num");
-const botonesOperadores = document.querySelectorAll(".operador");
+const displayOperacion = document.getElementById("operacion");
+const displayResultado = document.getElementById("resultado");
+const botones = document.querySelectorAll(".btn");
 
+let operacionCompleta = false;
 
-const resultado = new Resultado(resultadoValorAnterior, resultadoValorActual);
+const ultimoValor = () => displayOperacion.textContent.substring(displayOperacion.textContent.length-1)
 
-botonesNumeros.forEach(boton => {
-    boton.addEventListener("click", () => resultado.agregarNumero(boton.innerHTML));
+const escribirOperacion = text =>{
+    if(displayOperacion.textContent=='_' && text != '.') displayOperacion.textContent = '';
+
+    if(operacionCompleta && isNaN(text)){
+        displayOperacion.textContent = displayResultado.textContent;
+        operacionCompleta = false;
+    }
+
+    if(operacionCompleta && !isNaN(text)){
+        displayOperacion.textContent = '';
+        displayResultado.textContent = '0';
+        operacionCompleta = false;
+    }
+
+    if(isNaN(ultimoValor()) && isNaN(text)){
+       displayOperacion.textContent = displayOperacion.textContent.substring(0,displayOperacion.textContent.length-1)
+    }else if(displayOperacion.textContent.length<25){
+        displayOperacion.textContent += text;
+    }
+}
+
+const escribirResultado = () =>{
+    displayResultado.textContent = eval(displayOperacion.textContent)
+    operacionCompleta = true;
+}
+
+const borrarTodo = () =>{
+    displayOperacion.textContent = '_';
+    displayResultado.textContent = '0';
+}
+botones.forEach (boton => {
+    boton.addEventListener ('click', e => {
+        if(e.target.textContent !== ''){
+            switch (e.target.textContent) {
+                case '=': 
+                    escribirResultado();
+                    break;
+                case 'AC': 
+                    borrarTodo();
+                    break;
+                case ',': 
+                    escribirOperacion('.');
+                    break;
+                default: 
+                    escribirOperacion(e.target.textContent);
+                    break;
+            }
+        }
+    });
 });
-
-botonesOperadores.forEach(boton => {
-   boton.addEventListener("click", () => resultado.computar(boton.value));
-});
+    
